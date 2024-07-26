@@ -33,6 +33,9 @@ export class DuckPlayerPageMessages {
                 settings: {
                     pip: {
                         state: 'enabled'
+                    },
+                    autoplay: {
+                        state: 'enabled'
                     }
                 },
                 userValues: new UserValues({
@@ -138,7 +141,9 @@ export class DuckPlayerPageSettings {
     /**
      * @param {object} params
      * @param {object} params.pip
-     * @param {"enabled" | "disabled"} params.pip.state
+     * @param {"enabled" | "disabled"} params.pip.state     
+     * @param {object} params.autoplay     
+     * @param {"enabled" | "disabled"} params.autoplay.state     
      */
     constructor (params) {
         /**
@@ -146,5 +151,6 @@ export class DuckPlayerPageSettings {
          * 'disabled' means that the FE should never show it
          */
         this.pip = params.pip
+        this.autoplay = params.autoplay
     }
 }

@@ -100,6 +100,9 @@ const VideoPlayer = {
         if (opts.settings.pip.state === 'enabled') {
             VideoPlayer.enablePiP()
         }
+        if (opts.settings.autoplay.state === 'enabled') {
+            console.log("autoplay setting received");
+        }
     },
 
     /**

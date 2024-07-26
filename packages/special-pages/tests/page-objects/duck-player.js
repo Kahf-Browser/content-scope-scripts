@@ -50,6 +50,9 @@ export class DuckPlayerPage {
                 settings: {
                     pip: {
                         state: 'disabled'
+                    },
+                    autoplay: {
+                        state: 'disabled'
                     }
                 },
                 userValues: {
