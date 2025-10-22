@@ -8,7 +8,7 @@ export const BACKGROUND_COLOR_START = 'rgba(85, 127, 243, 0.10)';
 export const BACKGROUND_COLOR_END = 'rgba(85, 127, 243, 0.25)';
 export const OVERLAY_ID = 'ddg-password-import-overlay';
 export const DELAY_BEFORE_ANIMATION = 300;
-export const MANAGE_ARCHIVE_DEFAULT_BASE = '/manage/archive';
+const MANAGE_ARCHIVE_DEFAULT_BASE = '/manage/archive';
 
 /**
  * @typedef ButtonAnimationStyle
