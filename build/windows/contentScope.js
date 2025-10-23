@@ -8974,9 +8974,9 @@
             // don't continue if 'list' is present, but 'index' is not.
             //   valid: '/watch?v=321&list=123&index=1234'
             // invalid: '/watch?v=321&list=123' <- index absent
-            if (url.searchParams.has('list') && !url.searchParams.has('index')) {
-                return null
-            }
+            // if (url.searchParams.has('list') && !url.searchParams.has('index')) {
+            //     return null
+            // }
 
             let time = null;
 
