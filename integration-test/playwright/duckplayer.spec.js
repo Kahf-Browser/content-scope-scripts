@@ -232,7 +232,7 @@ test.describe('Video Player overlays', () => {
         // No video overlay
         await overlays.videoOverlayDoesntShow()
     })
-    test('Selecting \'Turn On Duck Player\'', async ({ page }, workerInfo) => {
+    test('Selecting \'Turn On Kahf Player\'', async ({ page }, workerInfo) => {
         const overlays = DuckplayerOverlays.create(page, workerInfo)
 
         // Given overlays feature is enabled
@@ -245,7 +245,7 @@ test.describe('Video Player overlays', () => {
         await overlays.turnOnDuckPlayer()
         await overlays.userSettingWasUpdatedTo('always ask') // not updated
     })
-    test('Selecting \'Turn On Duck Player\' + remember', async ({ page }, workerInfo) => {
+    test('Selecting \'Turn On Kahf Player\' + remember', async ({ page }, workerInfo) => {
         const overlays = DuckplayerOverlays.create(page, workerInfo)
 
         // Given overlays feature is enabled

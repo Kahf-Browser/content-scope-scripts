@@ -11,10 +11,10 @@ const text = {
         title: 'Tired of targeted YouTube ads and recommendations?'
     },
     videoOverlayTitle2: {
-        title: 'Turn on Duck Player to watch without targeted ads'
+        title: 'Turn On Kahf Player to watch without targeted ads'
     },
     videoOverlayTitle3: {
-        title: 'Drowning in ads on YouTube? {newline} Turn on Duck Player.'
+        title: 'Drowning in ads on YouTube? {newline} Turn On Kahf Player.'
     },
     videoOverlaySubtitle: {
         title: 'provides a clean viewing experience without personalized ads and prevents viewing activity from influencing your YouTube recommendations.'
@@ -26,7 +26,7 @@ const text = {
         title: 'Watch in Duck Player'
     },
     videoButtonOpen2: {
-        title: 'Turn On Duck Player'
+        title: 'Turn On Kahf Player'
     },
     videoButtonOptOut: {
         title: 'Watch Here'
