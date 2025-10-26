@@ -14,6 +14,9 @@ export class VideoOverlayManager {
 
     /** @type {import("./video-player-icon").VideoPlayerIcon | null} */
     videoPlayerIcon = null
+    
+    /** @type {boolean} */
+    userOptedIntoKahfPlayer = false
 
     selectors = {
         videoElement: '#player video',
@@ -141,6 +144,11 @@ export class VideoOverlayManager {
              * always remove everything first, to prevent any lingering state
              */
             this.removeAllOverlays()
+            
+            /**
+             * Reset the opt-in flag for the new video
+             */
+            this.userOptedIntoKahfPlayer = false
 
             /**
              * When enabled, always show the small dax icon
@@ -202,13 +210,17 @@ export class VideoOverlayManager {
             /**
              * To clean up, we need to stop the interval
              * and then call .play() on the original element, if it's still connected
+             * Only resume video if user opted out, not if they opted into Kahf Player
              */
             return () => {
                 clearInterval(int)
 
-                const video = /** @type {HTMLVideoElement} */(document.querySelector(this.selectors.videoElement))
-                if (video?.isConnected) {
-                    video.play()
+                // Only resume video if user opted out, not if they opted into Kahf Player
+                if (!this.userOptedIntoKahfPlayer) {
+                    const video = /** @type {HTMLVideoElement} */(document.querySelector(this.selectors.videoElement))
+                    if (video?.isConnected) {
+                        video.play()
+                    }
                 }
             }
         })
@@ -223,6 +235,9 @@ export class VideoOverlayManager {
      *
      */
     userOptIn (remember, params) {
+        // Mark that user opted into Kahf Player to prevent video from resuming
+        this.userOptedIntoKahfPlayer = true
+        
         /** @type {import("../duck-player.js").UserValues['privatePlayerMode']} */
         let privatePlayerMode = { alwaysAsk: {} }
         if (remember) {
