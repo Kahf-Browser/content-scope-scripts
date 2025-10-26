@@ -4842,6 +4842,9 @@
      *   - otherwise, stop the video playing + append our overlay
      */
 
+    // Global flag to prevent video from playing when Kahf Player is being used
+    let kahfPlayerInUse = false;
+
     /**
      * Handle the switch between small & large overlays
      * + conduct any communications
@@ -5012,8 +5015,16 @@
 
                 /**
                  * When enabled, just show the small dax icon
+                 * But first ensure the video stays paused since user opted into Kahf Player
                  */
                 if ('enabled' in userValues.privatePlayerMode) {
+                    // Ensure video stays paused when user has opted into Kahf Player
+                    const video = /** @type {HTMLVideoElement} */(document.querySelector(this.settings.selectors.videoElement));
+                    if (video?.isConnected) {
+                        video.pause();
+                    }
+                    // Keep global flag set since user has opted into Kahf Player
+                    kahfPlayerInUse = true;
                     return this.addSmallDaxOverlay(params)
                 }
 
@@ -5109,7 +5120,8 @@
                     clearInterval(int);
 
                     // Only resume video if user opted out, not if they opted into Kahf Player
-                    if (!this.userOptedIntoKahfPlayer) {
+                    // Also check global flag to prevent video from playing when Kahf Player is in use
+                    if (!this.userOptedIntoKahfPlayer && !kahfPlayerInUse) {
                         const video = /** @type {HTMLVideoElement} */(document.querySelector(this.settings.selectors.videoElement));
                         if (video?.isConnected) {
                             video.play();
@@ -5132,6 +5144,9 @@
         userOptIn (remember, params) {
             // Mark that user opted into Kahf Player to prevent video from resuming
             this.userOptedIntoKahfPlayer = true;
+            
+            // Set global flag to prevent any video from playing
+            kahfPlayerInUse = true;
             
             // Immediately pause the video to prevent it from playing
             const video = /** @type {HTMLVideoElement} */(document.querySelector(this.settings.selectors.videoElement));
@@ -5180,6 +5195,9 @@
          * @param {import("./util").VideoParams} params
          */
         userOptOut (remember, params) {
+            // Reset global flag since user is opting out of Kahf Player
+            kahfPlayerInUse = false;
+            
             /**
              * If the checkbox was checked we send the 'interacted' flag to the backend
              * so that the next video can just see the Dax icon instead of the full overlay
@@ -5202,6 +5220,8 @@
                     .catch(e => console.error('could not set userChoice for opt-out', e));
             } else {
                 this.messages.sendPixel(new Pixel({ name: 'play.do_not_use', remember: '0' }));
+                // Reset global flag since user is opting out of Kahf Player
+                kahfPlayerInUse = false;
                 this.destroy();
                 this.addSmallDaxOverlay(params);
             }
