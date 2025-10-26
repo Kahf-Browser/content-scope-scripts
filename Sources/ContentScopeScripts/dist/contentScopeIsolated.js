@@ -5133,6 +5133,25 @@
             // Mark that user opted into Kahf Player to prevent video from resuming
             this.userOptedIntoKahfPlayer = true;
             
+            // Immediately pause the video to prevent it from playing
+            const video = /** @type {HTMLVideoElement} */(document.querySelector(this.settings.selectors.videoElement));
+            if (video?.isConnected) {
+                video.pause();
+                
+                // Add a temporary pause mechanism to handle any race conditions
+                // This ensures the video stays paused even if other code tries to play it
+                const pauseInterval = setInterval(() => {
+                    if (video?.isConnected && !video.paused) {
+                        video.pause();
+                    }
+                }, 50);
+                
+                // Stop the pause interval after 2 seconds (enough time for navigation)
+                setTimeout(() => {
+                    clearInterval(pauseInterval);
+                }, 2000);
+            }
+            
             /** @type {import("../duck-player.js").UserValues['privatePlayerMode']} */
             let privatePlayerMode = { alwaysAsk: {} };
             if (remember) {
